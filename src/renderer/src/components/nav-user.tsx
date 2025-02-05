@@ -102,7 +102,7 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => location.href = "/login"}>
               <LogOut />
               Log out
             </DropdownMenuItem>
