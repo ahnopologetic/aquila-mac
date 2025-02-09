@@ -1,7 +1,8 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { AppSidebar } from './components/app-sidebar'
 import { SidebarProvider, SidebarTrigger } from './components/ui/sidebar'
-import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom'
-import { useAuth } from './contexts/AuthContext'
+import LoginPage from './app/login/page'
+import DashboardPage from './app/dashboard/page'
 
 function HomePage() {
   return (
@@ -10,24 +11,6 @@ function HomePage() {
       <p>Welcome to the home page!</p>
     </div>
   )
-}
-
-function LoginPage() {
-  const { login } = useAuth();
-  const navigate = useNavigate();
-
-  const handleLogin = () => {
-    login();
-    navigate('/');
-  };
-
-  return (
-    <div className="flex items-center justify-center h-full">
-      <h1>Login Page</h1>
-      <p>Please log in.</p>
-      <button onClick={handleLogin}>Login</button>
-    </div>
-  );
 }
 
 function SettingsPage() {
@@ -44,11 +27,11 @@ function App(): JSX.Element {
     <BrowserRouter>
       <SidebarProvider>
         <AppSidebar />
-        <main className='p-4'>
-          <SidebarTrigger className='mb-4' />
+        <main className="w-full">
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<DashboardPage />} />
             <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/login" element={<LoginPage />} />
           </Routes>
         </main>
       </SidebarProvider>
