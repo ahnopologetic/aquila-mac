@@ -1,17 +1,9 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { AppSidebar } from './components/app-sidebar'
-import { SidebarProvider, SidebarTrigger } from './components/ui/sidebar'
-import LoginPage from './app/login/page'
 import DashboardPage from './app/dashboard/page'
-
-function HomePage() {
-  return (
-    <div>
-      <h1>Home Page</h1>
-      <p>Welcome to the home page!</p>
-    </div>
-  )
-}
+import LoginPage from './app/login/page'
+import { AppSidebar } from './components/app-sidebar'
+import { SidebarProvider } from './components/ui/sidebar'
+import { useEffect, useState } from 'react'
 
 function SettingsPage() {
   return (
@@ -23,10 +15,20 @@ function SettingsPage() {
 }
 
 function App(): JSX.Element {
+  const [shouldHideSidebar, setShouldHideSidebar] = useState(false)
+  useEffect(() => {
+    if (window.location.pathname === '/login') {
+      setShouldHideSidebar(true)
+    }
+  }, [])
   return (
     <BrowserRouter>
-      <SidebarProvider>
-        <AppSidebar />
+      <SidebarProvider defaultOpen={false}>
+        <AppSidebar
+          hidden={shouldHideSidebar}
+          className={shouldHideSidebar ? 'hidden md:hidden' : ''}
+          collapsible={`icon`}
+        />
         <main className="w-full">
           <Routes>
             <Route path="/" element={<DashboardPage />} />
